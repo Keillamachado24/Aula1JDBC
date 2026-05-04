@@ -10,26 +10,37 @@ import java.util.Properties;
 
 public class DB {
 
-        public static Connection conn = null;
+    public static Connection conn = null;
 
-        public static Connection getConnection(){
-            if(conn == null) {
-                try {
+    public static Connection getConnection() {
+        if (conn == null) {
+            try {
 
-                    Properties props = loadProperties();
+                Properties props = loadProperties();
 
-                    String url = props.getProperty("dburl");
+                String url = props.getProperty("dburl");
 
-                    conn = DriverManager.getConnection(url, props);
+                conn = DriverManager.getConnection(url, props);
 
 
-                } catch (SQLException e) {
-                    throw new DbException(e.getMessage());
-                }
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
             }
-
-            return conn;
         }
+
+        return conn;
+    }
+
+    public static void closeConection() {
+        if (conn != null) {
+            try {
+            conn.close();
+
+        } catch (SQLException e){
+            throw new DbException(e.getMessage());
+        }
+    }
+}
 
 
         public static Properties loadProperties(){
