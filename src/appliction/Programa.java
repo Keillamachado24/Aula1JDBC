@@ -3,15 +3,37 @@ package appliction;
 import org.example.db.DB;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.example.db.DB;
 
 public class Programa {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        Connection conn = DB.getConnection();
+        Connection conn = null;
 
-        System.out.println("Conexão realizada com sucesso!");
-        System.out.println(DB.getConnection());
-        org.example.db.DB.closeConection();
+        Statement st = null;
+        ResultSet rs = null;
+
+        try{
+            conn = DB.getConnection();
+
+            st = conn.createStatement();
+
+            rs = st.executeQuery("select * from department");
+
+            while (rs.next()){
+                System.out.println(rs.getInt("Id") + " - " + rs.getString("Name"));
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
