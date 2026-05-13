@@ -23,16 +23,25 @@ public class Programa {
 
             st = conn.createStatement();
 
-            rs = st.executeQuery("select * from department");
+            rs = st.executeQuery("select * from seller");
 
             while (rs.next()){
-                System.out.println(rs.getInt("Id") + " - " + rs.getString("Name"));
+                System.out.println(rs.getInt("Id") + " - " + rs.getString("Name")  + " - " + rs.getString("Email")
+                        + " - "  + rs.getDate("BirthDate") + " - "  + rs.getInt("BaseSalary")
+                        + " - "  + rs.getInt("DepartmentId"));
 
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+            DB.closeConection();
+
         }
 
     }
